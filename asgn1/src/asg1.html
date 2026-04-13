@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Draw a point</title>
+    </head>
+
+    <body onload="main()">
+        <canvas id="webgl" width="400" height="400">
+            Please use a browser that supports "canvas"
+        </canvas>
+        <br>
+       
+        <button id="clearBtn">Clear Canvas</button>
+        <button id="undoBtn">Undo</button>
+
+        <p>Drawing Mode:</p>
+        <button id="SquareBtn">Square</button>
+        <button id="TriangleBtn">Triangle</button>
+        <button id="CircleBtn">Circle</button>
+
+        <br>
+        
+
+        <p>Shape Color:</p>
+        <div>
+            Red
+            <input type="range" id="redSlide" min="0" max="100" value="100" />
+            Green
+            <input type="range" id="greenSlide" min="0" max="100" value="100" />
+            Blue
+            <input type="range" id="blueSlide" min="0" max="100" value="100" />
+        </div>
+
+        <br>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <label>Shape Size</label>
+            <input type="range" min="5" max="40" value="10" id="sizeSlide">
+            
+            <label>(Circles) Segment Count:</label>
+            <input type="range" min="3" max="20" value="10" id="segSlide">
+        </div>
+
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <label>Opacity</label>
+            <input type="range" min="0" max="100" value="100" id="alphaSlide">
+            <button id="carBtn">Draw Cat</button>
+        </div>
+        <p>Awesome feature: Added opacity slider so paint brush can draw transparent shapes. </p>
+
+        <p>reference sketch:</p>
+        <img src="CarDraw.jpg" alt="cat scketch" width="250">
+        <script src="../lib/webgl-utils.js"></script>
+        <script src="../lib/webgl-debug.js"></script>
+        <script src="../lib/cuon-utils.js"></script>
+        <script src="ColoredPoints.js"></script>
+
+
+    </body>
+</html>
+
+
+        
+
