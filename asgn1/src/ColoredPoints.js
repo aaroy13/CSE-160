@@ -241,7 +241,7 @@ class Square {
         gl.disableVertexAttribArray(a_Position); //disable vertex attribute array
         gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
         gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
-        gl.uniform1f(u_Size, size);
+        gl.uniform1f(u_Size, size * 2.0);
         gl.drawArrays(gl.POINTS, 0, 1);
     }
 }
@@ -283,7 +283,7 @@ class Triangle {
         var rgba = this.color;
         var size = this.size;
 
-        var d = size / 400.0;
+        var d = size / 200.0;
 
         gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
         drawTriangle([
