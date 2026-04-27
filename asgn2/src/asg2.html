@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Assignment 2</title>
+</head>
+<body onload="main()">
+  <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports canvas
+  </canvas>
+  <br>
+
+  <label for="angleSlide">Global Rotation:</label>
+  <input type="range" id="angleSlide" min="0" max="360" value="0">
+  
+  <br>
+  <label>Front Legs:</label>
+  <input type="range" id="frontLegSlide" min="-30" max="30" value="0">
+  <br>
+
+  <label>Back Legs:</label>
+  <input type="range" id="backLegSlide" min="-30" max="30" value="0">
+  <br>
+
+  <label>Ears:</label>
+  <input type="range" id="earSlide" min="-20" max="20" value="0">
+  <br>
+
+  <label>Tail Base:</label>
+  <input type="range" id="tail1Slide" min="-45" max="45" value="25">
+  <br>
+
+  <label>Tail Middle:</label>
+  <input type="range" id="tail2Slide" min="-45" max="45" value="10">
+  <br>
+  <label>Tail Tip:</label>
+  <input type="range" id="tail3Slide" min="-45" max="45" value="-10">
+  <br>
+
+  <label>Zoom:</label>
+  <input type="range" id="zoomSlide" min="50" max="150" value="100">
+  <p id="fps">FPS: </p>
+  <br>
+
+  <button id="animationOnButton">Animation On</button>
+  <button id="animationOffButton">Animation Off</button>
+
+  <script src="../lib/webgl-debug.js"></script>
+  <script src="../lib/webgl-utils.js"></script>
+  <script src="../lib/cuon-utils.js"></script>
+  <script src="../lib/cuon-matrix-cse160.js"></script>
+
+  <script src="cube.js"></script>
+  <script src="animal.js"></script>
+</body>
+</html>
+
