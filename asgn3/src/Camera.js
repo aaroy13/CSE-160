@@ -8,6 +8,10 @@ export default class Camera {
     this.speed = 0.2;
     this.alpha = 5;
 
+    this.velocityY = 0;
+    this.isJumping = false;
+    this.gravity = -0.02;
+
     this.viewMatrix = new Matrix4();
     this.projectionMatrix = new Matrix4();
 
@@ -32,6 +36,10 @@ export default class Camera {
     let f = new Vector3();
     f.set(this.at);
     f.sub(this.eye);
+
+    // ignore vertical movement
+    f.elements[1] = 0;
+
     f.normalize();
     f.mul(this.speed);
 
@@ -45,6 +53,10 @@ export default class Camera {
     let b = new Vector3();
     b.set(this.eye);
     b.sub(this.at);
+
+    // ignore vertical movement
+    b.elements[1] = 0;
+
     b.normalize();
     b.mul(this.speed);
 
@@ -125,7 +137,7 @@ export default class Camera {
 
     this.updateViewMatrix();
   }
-  
+
   panHorizontal(angle) {
     let f = new Vector3();
       f.set(this.at);
@@ -146,4 +158,56 @@ export default class Camera {
 
     this.updateViewMatrix();
   }
+
+
+  panVertical(angle) {
+    let f = new Vector3();
+    f.set(this.at);
+    f.sub(this.eye);
+
+    let right = Vector3.cross(f, this.up);
+    right.normalize();
+
+    let rotationMatrix = new Matrix4();
+    rotationMatrix.setRotate(
+        angle,
+        right.elements[0],
+        right.elements[1],
+        right.elements[2]
+    );
+
+    let fPrime = rotationMatrix.multiplyVector3(f);
+
+    this.at.set(this.eye);
+    this.at.add(fPrime);
+
+    this.updateViewMatrix();
+    }
+
+
+    updateJump(groundHeight = 0) {
+        let floorY = groundHeight;
+
+        this.velocityY += this.gravity;
+
+        this.eye.elements[1] += this.velocityY;
+        this.at.elements[1] += this.velocityY;
+
+        if (this.eye.elements[1] <= floorY) {
+            let diff = floorY - this.eye.elements[1];
+
+            this.eye.elements[1] += diff;
+            this.at.elements[1] += diff;
+
+            this.velocityY = 0;
+            this.isJumping = false;
+        }
+
+        this.updateViewMatrix();
+    }
+
 }
+
+    
+
+

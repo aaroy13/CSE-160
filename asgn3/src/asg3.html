@@ -3,12 +3,57 @@
     <head>
         <meta charset="utf-8" />
         <title>blocky world</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        
+        <style>
+            #crosshair {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 28px;
+                font-family: Arial;
+                pointer-events: none;
+            }
+        </style>
     </head>
 
-    <body>
-        <canvas id="webgl" width="400" height="400">
+<body style="margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:black;">        <canvas id="webgl" width="800" height="800">
             Please use a browser that supports canvas
         </canvas>
+        <div id="info">
+            <h2>Minecraft</h2>
+
+            <p>
+                Game: Find the hidden diamond block.<br><br>
+
+                Controls:<br>
+                WASD - Move<br>
+                Q/E - Rotate<br>
+                SPACE - Jump<br>
+                F - Place block<br>
+                G - Break block<br><br>
+
+                Turn on audio for the best experience.<br><br>
+
+                Wow Features: <br>
+                   - Imported OBJ Enderman<br>
+                    - Teleporting Enderman<br>
+                    - Cave ambience sounds<br>
+                    - Fog effects
+</p>
+
+
+            </p>
+        </div>
+
+
+        <div id="crosshair">+</div>
 
         <script src="../lib/webgl-utils.js"></script>
         <script src="../lib/webgl-debug.js"></script>
