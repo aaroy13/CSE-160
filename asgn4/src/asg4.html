@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>blocky world</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        
+        <style>
+            #crosshair {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 28px;
+                font-family: Arial;
+                pointer-events: none;
+            }
+        </style>
+    </head>
+
+<body style="margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:black;">        <canvas id="webgl" width="800" height="800">
+            Please use a browser that supports canvas
+        </canvas>
+        <div id="info">
+            <h2>Minecraft</h2>
+
+            <p>
+                Game: Find the hidden diamond block.<br><br>
+
+                Controls:<br>
+                WASD - Move<br>
+                Q/E - Rotate<br>
+                SPACE - Jump<br>
+                F - Place block<br>
+                G - Break block<br><br>
+
+                Turn on audio for the best experience.<br><br>
+
+                Wow Features: <br>
+                   - Imported OBJ Enderman<br>
+                    - Teleporting Enderman<br>
+                    - Cave ambience sounds<br>
+                    - Fog effects
+</p>
+
+
+            </p>
+        </div>
+
+        <div id="controls">
+            <button id="normalButton">Normal View: Off</button>
+            <br><br>
+
+            <label>Light X</label>
+            <input type="range" min="-10" max="10" value="0" step="0.1" id="lightSlideX"><br>
+
+            <label>Light Y</label>
+            <input type="range" min="0" max="10" value="2" step="0.1" id="lightSlideY"><br>
+
+            <label>Light Z</label>
+            <input type="range" min="-10" max="10" value="-4" step="0.1" id="lightSlideZ"><br><br>
+
+            <label>Red</label>
+            <input type="range" min="0" max="1" value="1" step="0.01" id="lightR"><br>
+
+            <label>Green</label>
+            <input type="range" min="0" max="1" value="1" step="0.01" id="lightG"><br>
+
+            <label>Blue</label>
+            <input type="range" min="0" max="1" value="1" step="0.01" id="lightB">
+            
+            <br>
+            <button id="lightButton">Lighting: On</button>
+            <br><br>
+                        
+        </div>
+
+
+        <div id="crosshair">+</div>
+
+        <script src="../lib/webgl-utils.js"></script>
+        <script src="../lib/webgl-debug.js"></script>
+        <script src="../lib/cuon-utils.js"></script>
+        <script src="../lib/cuon-matrix-cse160.js"></script>
+
+        <script type="module" src="asg4.js"></script>
+
+    </body>
+
+</html>
