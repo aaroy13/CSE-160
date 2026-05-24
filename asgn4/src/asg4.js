@@ -59,6 +59,9 @@ const FSHADER_SOURCE = `
   uniform float u_FogNear;
   uniform float u_FogFar;
   uniform int u_LightOn;
+  uniform int u_SpotLightOn;
+  uniform vec3 u_SpotPos;
+  uniform vec3 u_SpotDir;
   
 
   varying vec4 v_Position;
@@ -131,6 +134,15 @@ const FSHADER_SOURCE = `
     diffuse +
     specular;
 
+    if (u_SpotLightOn == 1) {
+      vec3 spotVector = normalize(v_Position.xyz - u_SpotPos);
+      float spotEffect = dot(-spotVector, normalize(u_SpotDir));
+
+      if (spotEffect < 0.80) {
+        result *= 0.6;
+      }
+    }
+
     gl_FragColor =
     vec4(result,color.a);
   }`;
@@ -142,6 +154,9 @@ let wowMessage = "";
 let g_lightPos = [0, 2, -4];
 let g_lightColor = [1,1,1];
 let g_lightOn = true;
+let g_spotLightOn = true;
+let g_spotPos = [0, 3, -3];
+let g_spotDir = [0, -1, 0];
 
 let caveSound = new Audio("../sound/cave.mp3");
 let caveSound2 = new Audio("../sound/cave2.mp3");
@@ -417,6 +432,9 @@ function main() {
   program.u_NormalMatrix = gl.getUniformLocation(program, "u_NormalMatrix");
   program.u_NormalOn = gl.getUniformLocation(program, "u_NormalOn");
   program.u_LightOn = gl.getUniformLocation(program, "u_LightOn");
+  program.u_SpotLightOn = gl.getUniformLocation(program, "u_SpotLightOn");
+  program.u_SpotPos = gl.getUniformLocation(program, "u_SpotPos");
+  program.u_SpotDir = gl.getUniformLocation(program, "u_SpotDir");
 
   gl.uniform1i(program.u_Sampler0, 0);
   gl.uniform1i(program.u_Sampler1, 1);
@@ -424,7 +442,7 @@ function main() {
   const camera = new Camera(canvas);
 
   let enderman = new Model(gl, "../model/minecraft_-_enderman.obj");
-
+  let dragon = new Model(gl, "../model/dragon.obj");
   let sky = new Cube();
 
   let ground = new Cube();
@@ -476,6 +494,11 @@ function main() {
     gl.uniform3f(program.u_LightPos, g_lightPos[0], g_lightPos[1], g_lightPos[2]);
     gl.uniform3f(program.u_CameraPos, camera.eye.elements[0], camera.eye.elements[1], camera.eye.elements[2]);
     gl.uniform3f(program.u_LightColor, g_lightColor[0], g_lightColor[1], g_lightColor[2]);
+    gl.uniform1i(program.u_SpotLightOn, g_spotLightOn ? 1 : 0);
+
+    gl.uniform3f(program.u_SpotPos, g_spotPos[0], g_spotPos[1], g_spotPos[2]);
+
+    gl.uniform3f(program.u_SpotDir, g_spotDir[0], g_spotDir[1], g_spotDir[2]);
 
     if (wowMode) {
       gl.uniform3f(program.u_FogColor, 0.65, 0.65, 0.7);
@@ -492,6 +515,10 @@ function main() {
     gl.depthMask(false);
     gl.disable(gl.DEPTH_TEST);
 
+    gl.uniform1i(program.u_LightOn, 0);
+    gl.uniform1i(program.u_SpotLightOn, 0);
+    
+
     gl.uniform1f(program.u_UVScale, 1.0);
     gl.uniform1i(program.u_WhichTexture, -1);
 
@@ -505,19 +532,24 @@ function main() {
     sky.matrix.scale(80, 80, 80);
     sky.render(gl, program);
 
+    
+    
     gl.enable(gl.DEPTH_TEST);
     gl.depthMask(true);
-
+    
     // ground
     gl.uniform1i(program.u_WhichTexture, 1);
     gl.uniform1f(program.u_texColorWeight, 1.0);
     gl.uniform1f(program.u_UVScale, 32.0);
     ground.render(gl, program);
-
+    
+    gl.uniform1i(program.u_LightOn, g_lightOn ? 1 : 0);
+    gl.uniform1i(program.u_SpotLightOn, g_spotLightOn ? 1 : 0);
+    
     gl.uniform1i(program.u_WhichTexture, -1);
     gl.uniform4f(program.baseColor, 1.0, 0.5, 0.2, 1.0);
     gl.uniform1f(program.u_texColorWeight, 0.0);
-
+    
     sphere.render(gl, program);
 
     // walls
@@ -525,6 +557,18 @@ function main() {
     gl.uniform1f(program.u_texColorWeight, 1.0);
     gl.uniform1f(program.u_UVScale, 1.0);
     Cube.renderInstances(gl, program, ext, wallPositions);
+
+    if (dragon.isFullyLoaded) {
+      dragon.matrix.setIdentity();
+      dragon.matrix.translate(0, 1, -5);
+      dragon.matrix.scale(.5, .5, .5);
+
+      gl.uniform1i(program.u_WhichTexture, -1);
+      gl.uniform4f(program.baseColor, 0.9, 0.23, 0.17, 1.0);
+      gl.uniform1f(program.u_texColorWeight, 0.0);
+
+      dragon.render(gl, program);
+    }
 
     //diamond block
     if (!diamondCollected) {
