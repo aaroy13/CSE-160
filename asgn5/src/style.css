@@ -1,0 +1,43 @@
+#sidebar {
+    position: fixed;
+    top: 20px;
+    right: 20px;       
+
+    width: 260px;
+
+    background: rgba(10, 10, 10, 0.85);
+    border: 2px solid #8b0000;
+
+    font-family: monospace;
+    color: #e6e6e6;
+
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
+
+    padding: 10px;
+    z-index: 99999;  
+}
+.header {
+    font-weight: bold;
+    color: #ff3b3b;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.body {
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.body b {
+    color: #ffffff;
+}
+
+.footer {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 10px;
+    color: #777;
+    border-top: 1px solid #333;
+    padding-top: 5px;
+}
